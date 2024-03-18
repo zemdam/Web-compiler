@@ -1,0 +1,8 @@
+<form action="{% url 'web_compiler:add_file' current_catalog.id|default:"0" %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <label class="menu__button" for="id_actual_file">
+        {{ uploadFileForm }}
+        Dodaj plik
+    </label>
+</form>

@@ -1,0 +1,32 @@
+{% for catalog in catalogs%}
+    {% if catalog.available %}
+    <li>
+        {% if current_catalog and current_catalog.id == catalog.id %}
+        <a class="tree-node selected" onclick="changePage('{% url 'web_compiler:open_catalog' catalog.id %}')">&#128193; {{ catalog.name }}</a>
+        {% else %}
+        <a class="tree-node" onclick="changePage('{% url 'web_compiler:open_catalog' catalog.id %}')">&#128193; {{ catalog.name }}</a>
+        {% endif %}
+            <ul>
+                {% if add_to_catalog_id == catalog.id %}
+                    {% include "new_catalog.html" %}
+                {% endif %}
+                {% with catalogs=catalog.catalog_set.all files=catalog.file_set.all %}
+                    {% include "file_tree.html" %}
+                {% endwith %}
+            </ul>
+        </details>
+    </li>
+    {% endif %}
+{% endfor %}
+
+{% for file in files%}
+    {% if file.available %}
+    <li>
+        {% if current_file and current_file.id == file.id %}
+        <a class="tree-node selected" onclick="changePage('{% url 'web_compiler:open_file' file.id %}')">{{ file.name }}</a>
+        {% else %}
+        <a class="tree-node" onclick="changePage('{% url 'web_compiler:open_file' file.id %}')">{{ file.name }}</a>
+        {% endif %}
+    </li>
+    {% endif %}
+{% endfor %}

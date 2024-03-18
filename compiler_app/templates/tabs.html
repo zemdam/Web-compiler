@@ -1,0 +1,14 @@
+  <div class="tab" id="tab1">
+    {{ standardForm }}
+  </div>
+  <div class="tab" id="tab2">
+    {{ optimizationsForm }}
+  </div>
+  <div class="tab" id="tab3">
+    {{ processorForm }}
+  </div>
+  <div class="tab" id="tab4">
+    {% if request.session.processor.processor == "-mmcs51" %} {% include 'mcs51_options.html' %} {% endif %}
+    {% if request.session.processor.processor == "-mz80" %} {% include 'z80_options.html' %} {% endif %}
+    {% if request.session.processor.processor == "-mstm8" %} {% include 'stm8_options.html' %} {% endif %}
+  </div>

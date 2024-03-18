@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <title>Kompilator</title>
+
+  <link rel="stylesheet" href="{% static 'compiler_app/style.css' %}?version=18">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="{% static 'compiler_app/scripts.js' %}?version=5"></script>
+
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <div class="grid" id="grid">
+    <div class="grid__menu">
+      <a class="menu__burger burger" href="#menu-navbar">&#9776;</a>
+      <ul class="menu__menu-navbar navbar" id="menu-navbar">
+        <li class="menu-navbar__item navbar-item">
+          <a class="menu-navbar__link" href="#plik">Plik</a>
+            <ul>
+              <li>{% include "upload_file.html" %}</li>
+              <li><a class="menu__button" onclick="changePage('{% url 'web_compiler:add_catalog' current_catalog.id|default:"0" %}')">Dodaj folder</a></li>
+              {% if current_file %}
+                <li><a class="menu__button" onclick="changePage('{% url 'web_compiler:compiled_file' current_file.id %}')">Kompiluj</a></li>
+              {% endif %}
+              {% if compiled_file_content %}
+                <li><a class="menu__button" href="{% url 'web_compiler:download_compiled_file' current_file.id %}">Pobierz skompilowany plik</a></li>
+              {% endif %}
+            </ul>
+        </li>
+        <li class="menu-navbar__item navbar-item">
+          <a class="menu-navbar__link" href="#edycja">Edycja</a>
+            <ul>
+              {% include "delete.html" %}
+            </ul>
+        </li>
+        <li class="menu-navbar__item navbar-item">
+          <a class="menu-navbar__link" href="#opcje">Opcje</a>
+            <ul>
+              {% if compiled_file_content %}
+              <li><div class="menu__button" onclick="hideSections()">Schowaj wszystkie sekcje</div></li>
+              <li><div class="menu__button" onclick="showSections()">Pokaż wszystkie sekcje</div></li>
+              {% endif%}
+              {% if user.is_authenticated %}
+              <li><a class="menu__button" href="{% url 'web_compiler:logout' %}">Wyloguj</a></li>
+              {% else %}
+              <li><a class="menu__button" href="{% url 'web_compiler:login' %}">Zaloguj</a></li>
+              {% endif %}
+            </ul>
+        </li>
+        <li class="menu-navbar__item navbar-item">
+          <a class="menu-navbar__link" href="#dodaj_sekcje">Dodaj sekcję</a>
+          <ul>
+            {% if current_file %}
+            <form id="add-section-id" class="add-section" action="{% url 'web_compiler:add_section' current_file.id %}" method="post">
+              {% csrf_token %}
+              {{ addSectionForm }}
+              <li><div class="menu__button" onclick="addSection(6)">Procedura</div></li>
+              <li><div class="menu__button" onclick="addSection(5)">Komentarz</div></li>
+              <li><div class="menu__button" onclick="addSection(4)">Dyrektywa</div></li>
+              <li><div class="menu__button" onclick="addSection(3)">Deklaracja zmiennych</div></li>
+              <li><div class="menu__button" onclick="addSection(2)">Wstawka assemblerowa</div></li>
+              <li><div class="menu__button" onclick="addSection(1)">Inna</div></li>
+            </form>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="grid__file-choose">
+      <ul class="file-choose__tree">
+        {% if add_to_catalog_id == 0 %}
+          {% include "new_catalog.html" %}
+        {% endif %}
+        {% include "file_tree.html" %}
+      </ul>
+      <a class="file-choose__main" onclick="changePage('{% url 'web_compiler:index' %}')"></a>
+    </div>
+
+    <pre class="grid__program-code grid__other grid__code code__code">{% include 'display_file.html' %}</pre>
+
+    <pre class="grid__code-fragment grid__other grid__code">{% include 'compiled_code.html' %}</pre>
+
+    
+    <div class="grid__tabs">
+      <ul class="tabs__tabs-navbar navbar grid__other">
+        <li class="tabs-navbar__item navbar-item">
+          <a class="tabs-navbar__link" href="#tab1">STANDARD</a>
+        </li>
+        <li class="tabs-navbar__item navbar-item">
+          <a class="tabs-navbar__link" href="#tab2">OPTYMALIZACJE</a>
+        </li>
+        <li class="tabs-navbar__item navbar-item">
+          <a class="tabs-navbar__link" href="#tab3">PROCESOR</a>
+        </li>
+        <li class="tabs-navbar__item navbar-item">
+          <a class="tabs-navbar__link" href="#tab4" on>ZALEŻNE</a>
+        </li>
+      </ul>
+
+      <form class="tabs__tab-field grid__other" action="{% url 'web_compiler:set_compile_options' %}" method="post" onsubmit="sendPost(event,this)">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
+        {% include 'tabs.html' %}
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

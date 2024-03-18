@@ -1,0 +1,84 @@
+[
+    {
+        "model": "compiler_app.sectiontype",
+        "pk": 1,
+        "fields": {
+            "name": "Inna",
+            "type": "Other",
+            "css_class": "section__other"
+        }
+    },
+    {
+        "model": "compiler_app.sectiontype",
+        "pk": 2,
+        "fields": {
+            "name": "Wstawka assemblerowa",
+            "type": "Inline Assembly",
+            "css_class": "section__inline-assembly"
+        }
+    },
+    {
+        "model": "compiler_app.sectiontype",
+        "pk": 3,
+        "fields": {
+            "name": "Deklaracja zmiennych",
+            "type": "Variable declaration",
+            "css_class": "section__variable-declaration"
+        }
+    },
+    {
+        "model": "compiler_app.sectiontype",
+        "pk": 4,
+        "fields": {
+            "name": "Dyrektywa",
+            "type": "Compiler directive",
+            "css_class": "section__compiler-directive"
+        }
+    },
+    {
+        "model": "compiler_app.sectiontype",
+        "pk": 5,
+        "fields": {
+            "name": "Komentarz",
+            "type": "Comment",
+            "css_class": "section__comment"
+        }
+    },
+    {
+        "model": "compiler_app.sectiontype",
+        "pk": 6,
+        "fields": {
+            "name": "Procedura",
+            "type": "Procedure",
+            "css_class": "section__procedure"
+        }
+    },
+    {
+        "model": "compiler_app.sectionstatus",
+        "pk": 1,
+        "fields": {
+            "status": "Not compiled"
+        }
+    },
+    {
+        "model": "compiler_app.sectionstatus",
+        "pk": 2,
+        "fields": {
+            "status": "Does not compile"
+        }
+    },
+    {
+        "model": "compiler_app.sectionstatus",
+        "pk": 3,
+        "fields": {
+            "status": "Compiles without warnings"
+        }
+    },
+    {
+        "model": "compiler_app.sectionstatus",
+        "pk": 4,
+        "fields": {
+            "status": "Compiles with warnings"
+        }
+    }
+]

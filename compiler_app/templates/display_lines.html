@@ -1,0 +1,1 @@
+{% for line in section.lines %}<div class="line"><div class="numed-line" id="numed-{{ line.num }}" onclick="markLine({{ line.num }})">{{ line.num }}</div><div class="line-data" id="line-{{ line.num }}" tabindex='1'>{{ line.data }}</div></div>{% endfor %}

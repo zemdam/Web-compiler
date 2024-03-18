@@ -1,0 +1,16 @@
+{% if current_file %}
+    <li>
+        <form class="menu__button" action="{% url 'web_compiler:delete_file' current_file.id %}" method="post" onsubmit="sendPost(event, this)">
+            {% csrf_token %}
+            <input class="menu__button" type="submit" value="Usuń plik">
+        </form>
+    </li>
+{% endif %}
+{% if current_catalog %}  
+    <li>
+        <form class="menu__button" action="{% url 'web_compiler:delete_catalog' current_catalog.id %}" method="post" onsubmit="sendPost(event, this)">
+            {% csrf_token %}
+            <input class="menu__button" type="submit" value="Usuń katalog">
+        </form>
+    </li>
+{% endif %}

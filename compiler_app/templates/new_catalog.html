@@ -1,0 +1,5 @@
+<form action="{% url 'web_compiler:add_catalog' current_catalog.id|default:"0" %}" method="post" onsubmit="sendPost(event,this)">
+    {% csrf_token %}
+    {{ newCatalogForm.as_table }}
+    <input type="submit" value="Utwórz">
+</form>
